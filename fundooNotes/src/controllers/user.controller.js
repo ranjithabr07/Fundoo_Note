@@ -20,3 +20,22 @@ export const registerNewUser = async (req, res, next) => {
     next(error);
   }
 };
+
+/**
+ * Controller to login a user
+ * @param  {object} req - request object
+ * @param {object} res - response object
+ * @param {Function} next
+ */
+ export const login = async (req, res, next) => {
+  try {
+    const data = await UserService.login(req.body);
+    res.status(HttpStatus.OK).json({
+      code: HttpStatus.OK,
+      data: data,
+      message: 'user login successfully'
+    });
+  } catch (error) {
+    next(error);
+  }
+};
