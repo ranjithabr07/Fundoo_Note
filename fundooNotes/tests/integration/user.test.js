@@ -28,106 +28,104 @@ describe('User APIs Test', () => {
 
  
 
-//Testcase for invalid firstname having less than 4 characters
+// 1 Test case for user registration with valid data
 describe('UserRegistration', () => {
   const userDetails={
-    "firstname":"Rit",
-    "lastname":"Patil",
-    "email":"ranju@gmail.com",
-    "password":"ranjua@1234"
+    "firstName":"kushukVishnu",
+    "lastName":"MS",
+    "email":"kushu6@gmail.com",
+    "password":"123456"
+  }
+  it('Given user registration details should be saved in database', (done) => {
+    request(app)
+      .post('/api/v1/users/register')
+      .send(userDetails)
+      .end((err, res) => {
+        expect(res.statusCode).to.be.equal(201);
+        done();
+      });
+    });
+  });
+
+  // 2 Testcase for invalid firstname having less than 4 characters
+describe('UserRegistration', () => {
+  const userDetails={
+    "firstName":"kus",
+    "lastName":"MS",
+    "email":"kushu6@gmail.com",
+    "password":"123456"
   }
   it('Given user registration details should not be saved in database', (done) => {
     request(app)
       .post('/api/v1/users/register')
       .send(userDetails)
       .end((err, res) => {
-        expect(res.statusCode).to.be.equal(500);
+        expect(res.statusCode).to.be.equal(400);
         done();
       });
     });
   });
 
-//Testcase for invalid firstname,first letter is not capital
+  // 3 Testcase for invalid email,
 describe('UserRegistration', () => {
   const userDetails={
-    "firstname":"ritu",
-    "lastname":"Patil",
-    "email":"ranju@gmail.com",
-    "password":"ranju@1234"
+    "firstName":"kus",
+    "lastName":"MS",
+    "email":"kushu6gmail.com",
+    "password":"123456"
   }
   it('Given user registration details should not be saved in database', (done) => {
     request(app)
       .post('/api/v1/users/register')
       .send(userDetails)
       .end((err, res) => {
-        expect(res.statusCode).to.be.equal(500);
+        expect(res.statusCode).to.be.equal(400);
         done();
       });
     });
   });
 
-//Testcase for invalid lastname,having less than 4 characters
+   // 4 Testcase for invalid password,
 describe('UserRegistration', () => {
   const userDetails={
-      "firstname":"ranju",
-      "lastname":"Pat",
-      "email":"ranju@gmail.com",
-      "password":"ranju@1234"
+    "firstName":"kus",
+    "lastName":"MS",
+    "email":"kushu6@gmail.com",
+    "password":"123"
   }
   it('Given user registration details should not be saved in database', (done) => {
     request(app)
       .post('/api/v1/users/register')
       .send(userDetails)
       .end((err, res) => {
-        expect(res.statusCode).to.be.equal(500);
+        expect(res.statusCode).to.be.equal(400);
         done();
       });
     });
   });
 
-//Testcase for invalid lastname,,first letter is not capital
-describe('UserRegistration', () => {
-  const userDetails={
-      "firstname":"ranju",
-      "lastname":"pati",
-      "email":"ranju@gmail.com",
-      "password":"ranju@1234"
-  }
-  it('Given user registration details should not be saved in database', (done) => {
-    request(app)
-      .post('/api/v1/users/register')
-      .send(userDetails)
-      .end((err, res) => {
-        expect(res.statusCode).to.be.equal(500);
-        done();
-      });
-    });
-  });
-
-//Testcase for invalid email
-describe('UserRegistration', () => {
-  const userDetails={
-      "firstname":"ranju",
-      "lastname":"Patil",
-      "email":"ranjugmail.com",
-      "password":"ranju@1234"
-  }
-  it('Given user registration details should not be saved in database', (done) => {
-    request(app)
-      .post('/api/v1/users/register')
-      .send(userDetails)
-      .end((err, res) => {
-        expect(res.statusCode).to.be.equal(500);
-        done();
-      });
-    });
-  });
-
-//Test case for login with invalid email
+  // 5 Test case for login with invalid email
 describe('UserLogin', () => {
   const loginDetails={
-    "email":"ritz@gmail.com",
-    "password":"Ritz@1234"
+    "email":"kushu6@gmail.com",
+    "password":"123456"
+  }
+  it('Given unregistered user login details should not get logged in', (done) => {
+    request(app)
+      .post('/api/v1/users/login')
+      .send(loginDetails)
+      .end((err, res) => {
+        expect(res.statusCode).to.be.equal(200);
+        done();
+      });
+    });
+  });
+
+   // 6 Test case for login with invalid email
+describe('UserLogin', () => {
+  const loginDetails={
+    "email":"kushu6gmail.com",
+    "password":"123456"
   }
   it('Given unregistered user login details should not get logged in', (done) => {
     request(app)
@@ -140,13 +138,13 @@ describe('UserLogin', () => {
     });
   });
 
-//Test case for login with invalid password
+    // 7 Test case for login with invalid password
 describe('UserLogin', () => {
   const loginDetails={
-    "email":"shraddha123@gmail.com",
-    "password":"shar1234"
+    "email":"kushu6gmail.com",
+    "password":"12"
   }
-  it('Given invalid password login details should not get logged in', (done) => {
+  it('Given unregistered user login details should not get logged in', (done) => {
     request(app)
       .post('/api/v1/users/login')
       .send(loginDetails)
@@ -157,13 +155,13 @@ describe('UserLogin', () => {
     });
   });
 
-//Test case for login with password data not found
+    // 8 Test case for login with invalid password
 describe('UserLogin', () => {
   const loginDetails={
-    "email":"Sivkapoor@gmail.com",
+    "email":"kushu6gmail.com",
     "password":""
   }
-  it('Given invalid password login details should not get logged in', (done) => {
+  it('Given unregistered user login details should not get logged in', (done) => {
     request(app)
       .post('/api/v1/users/login')
       .send(loginDetails)
@@ -174,22 +172,22 @@ describe('UserLogin', () => {
     });
   });
 
-//10.Test case for login with password data not found
-/*describe('UserLogin', () => {
+    // 9 Test case for login with invalid password
+describe('UserLogin', () => {
   const loginDetails={
-    "email":"Sivkapoor@gmail.com",
-    "password":"Shivansh@12"
+    "email":"kushu6gmail.com",
+    "password":"124545"
   }
-  it('Given invalid password login details should not get logged in', (done) => {
+  it('Given unregistered user login details should not get logged in', (done) => {
     request(app)
       .post('/api/v1/users/login')
       .send(loginDetails)
       .end((err, res) => {
-        expect(res.statusCode).to.be.equal(201);
+        expect(res.statusCode).to.be.equal(500);
         done();
       });
     });
-  });*/
-});
+  });
+
 
 });
